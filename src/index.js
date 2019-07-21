@@ -6,18 +6,24 @@ const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 
 const App = props => {
   const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState(initialPoints);
 
-  const handleClick = () => {
+  const handleNewAnecdote = () => {
     const randomIndex = Math.floor(Math.random() * anecdotes.length);
-    console.log(randomIndex);
-
     setSelected(randomIndex);
   };
+
+  const handleVote = () => {
+    setPoints({ ...points, [selected]: points[selected] + 1 });
+  };
+  console.log(points);
 
   return (
     <div>
       <p>{props.anecdotes[selected]}</p>
-      <Button onClick={handleClick} text="next anecdote" />
+      <p>has {points[selected]} votes</p>
+      <Button onClick={handleVote} text="vote" />
+      <Button onClick={handleNewAnecdote} text="next anecdote" />
     </div>
   );
 };
@@ -30,5 +36,10 @@ const anecdotes = [
   'Premature optimization is the root of all evil.',
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ];
+
+const initialPoints = {};
+for (const key of anecdotes.keys()) {
+  initialPoints[key] = 0;
+}
 
 ReactDOM.render(<App anecdotes={anecdotes} />, document.getElementById('root'));
