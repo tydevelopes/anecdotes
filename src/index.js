@@ -96,3 +96,4 @@ ReactDOM.render(
 );
 
 // TODO: render all anecdotes with the most votes
+// TODO: put each component in a sepate file
