@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
@@ -43,20 +43,15 @@ const App = ({ anecdotes, initialPoints }) => {
   };
 
   const handleVote = () => {
-    setPoints({ ...points, [selected]: points[selected] + 1 });
-  };
+    const updatedPoints = { ...points };
+    updatedPoints[selected] += 1;
+    setPoints(updatedPoints);
 
-  useEffect(() => {
-    let maxIndex = 0;
-    let max = points[0];
-    for (const key in points) {
-      if (points[key] > max) {
-        max = points[key];
-        maxIndex = key;
-      }
+    if (updatedPoints[maxIndex] < updatedPoints[selected]) {
+      setMaxIndex(selected);
     }
-    setMaxIndex(maxIndex);
-  }, [selected, points]);
+  };
+  console.log(maxIndex);
 
   return (
     <div>
